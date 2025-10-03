@@ -45,3 +45,13 @@ app.*.map.json
 /android/app/release
 
 **/android/local.properties
+
+
+
+# Platform folders
+/web/
+/macos/
+/linux/
+/android/
+/ios/
+/.vscode/
