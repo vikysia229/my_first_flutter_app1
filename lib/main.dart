@@ -13,112 +13,121 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Лабораторная работа - Аюшиева В.А.'),
         ),
-        body: MyHomePage(),
+        body: FirstScreen(),
       ),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
+  @override
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _weightController = TextEditingController();
+  final _heightController = TextEditingController();
+  bool _agreementChecked = false;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Wrap(
-        spacing: 12.0,
-        runSpacing: 12.0,
-        children: [
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.red, 
-            margin: EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(
-                '1',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Калькулятор ИМТ - Аюшиева В.А.'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _weightController,
+                decoration: InputDecoration(labelText: 'Вес (кг)'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Введите вес';
+                  }
+                  return null;
+                },
               ),
-            ),
-          ),
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.orange, 
-            margin: EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(
-                '2',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              SizedBox(height: 16),
+              TextFormField(
+                controller: _heightController,
+                decoration: InputDecoration(labelText: 'Рост (см)'),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Введите рост';
+                  }
+                  return null;
+                },
               ),
-            ),
-          ),
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.yellow, 
-            margin: EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(
-                '3',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+              SizedBox(height: 16),
+              CheckboxListTile(
+                title: Text('Согласие на обработку данных'),
+                value: _agreementChecked,
+                onChanged: (bool? value) {
+                  setState(() {
+                    _agreementChecked = value ?? false;
+                  });
+                },
               ),
-            ),
-          ),
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.green,
-            margin: EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(
-                '4',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate() && _agreementChecked) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SecondScreen(
+                          weight: double.parse(_weightController.text),
+                          height: double.parse(_heightController.text),
+                        ),
+                      ),
+                    );
+                  }
+                },
+                child: Text('Рассчитать'),
               ),
-            ),
+            ],
           ),
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.blue, 
-            margin: EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(
-                '5',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: 100,
-            height: 100,
-            color: Colors.purple, 
-            margin: EdgeInsets.all(4.0),
-            child: Center(
-              child: Text(
-                '6',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
+      ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  final double weight;
+  final double height;
+
+  const SecondScreen({
+    Key? key,
+    required this.weight,
+    required this.height,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final bmi = weight / ((height / 100) * (height / 100));
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Результат'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('ИМТ: ${bmi.toStringAsFixed(1)}'),
+            SizedBox(height: 16),
+            Text('Вес: $weight кг'),
+            Text('Рост: $height см'),
+          ],
+        ),
       ),
     );
   }
