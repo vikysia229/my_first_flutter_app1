@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'screens/bmi_screen.dart';
-import 'screens/bmi_cubit.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,14 +11,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Калькулятор ИМТ',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      title: 'NASA APOD App',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black87,
+          elevation: 0,
+        ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.blue,
+        ),
       ),
-      home: BlocProvider(
-        create: (context) => BmiCubit(),
-        child: const BmiScreen(),
-      ),
+      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
