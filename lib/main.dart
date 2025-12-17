@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
+import 'screens/developer_screen.dart';
+import 'screens/calculator_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const WeatherApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class WeatherApp extends StatelessWidget {
+  const WeatherApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'NASA APOD App',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.black,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.black87,
-          elevation: 0,
-        ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: Colors.blue,
-        ),
+      title: 'Погодное приложение',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
       home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
+      routes: {
+        '/developer': (context) => const DeveloperScreen(),
+        '/calculator': (context) => const CalculatorScreen(),
+      },
     );
   }
 }

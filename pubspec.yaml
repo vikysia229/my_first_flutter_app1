@@ -1,5 +1,5 @@
-name: nasa_mars_rover
-description: "NASA Mars Rover Photos App"
+name: weather_app
+description: Лабораторная работа по мобильным приложениям
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -30,10 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.6.0
-  equatable: ^2.0.7
-  flutter_bloc: ^9.1.1
-  cached_network_image: ^3.4.1
+  http: ^1.1.0
+  shared_preferences: ^2.2.2
+  url_launcher: ^6.1.11
+  intl: ^0.19.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
